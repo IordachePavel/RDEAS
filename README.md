@@ -15,7 +15,8 @@ Compus din 4 motoare, controlate câte 2 deodată pentru mișcare și viraj tip 
 Partea electronică este compusă din:
 1.	Dispozitivul de control
 2.	Circuitul de navigare al robotului
-Dispozitivul de control
+   
+Dispozitivul de control:
 Acesta se bazează pe un procesor xscale pocket pc, cu o frecvență de 400MHz, 64 MB de RAM și 64 de ROM, cu o interfață intermediară bazată pe MCU-ul atmel care permite depanarea ușoară și utilizarea unui afișaj de informații secundar.
 Portul serial DB-9 de pe dispozitiv este conform standardelor RS-232 și poate comunica cu majoritatea dispozitivelor care au o astfel de conexiune.
 Dispozitivul de control la distanță este echipat cu două baterii, una principală și una secundară. Pentru funcționare, este necesară doar prima. Dispozitivul de control la distanță beneficiază de aproximativ  12 ore de funcționare continuă din prima baterie, iar cea de-a doua baterie este opțională și este utilizată doar pentru a rula pocket pc-ul.
