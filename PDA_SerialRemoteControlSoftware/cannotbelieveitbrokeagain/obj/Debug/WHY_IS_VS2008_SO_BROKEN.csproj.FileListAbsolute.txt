@@ -1,0 +1,12 @@
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\WHY_IS_VS2008_SO_BROKEN\WHY_IS_VS2008_SO_BROKEN\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\WHY_IS_VS2008_SO_BROKEN\WHY_IS_VS2008_SO_BROKEN\obj\Debug\WHY_IS_VS2008_SO_BROKEN.Form1.resources
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\WHY_IS_VS2008_SO_BROKEN\WHY_IS_VS2008_SO_BROKEN\obj\Debug\WHY_IS_VS2008_SO_BROKEN.Properties.Resources.resources
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\WHY_IS_VS2008_SO_BROKEN\WHY_IS_VS2008_SO_BROKEN\obj\Debug\WHY_IS_VS2008_SO_BROKEN.Sensor_Graphs.resources
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\WHY_IS_VS2008_SO_BROKEN\WHY_IS_VS2008_SO_BROKEN\obj\Debug\WHY_IS_VS2008_SO_BROKEN.TTL_Demo.resources
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\WHY_IS_VS2008_SO_BROKEN\WHY_IS_VS2008_SO_BROKEN\obj\Debug\WHY_IS_VS2008_SO_BROKEN.csproj.GenerateResource.Cache
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\WHY_IS_VS2008_SO_BROKEN\WHY_IS_VS2008_SO_BROKEN\obj\Debug\WHY_IS_VS2008_SO_BROKEN.Help_Page.resources
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\WHY_IS_VS2008_SO_BROKEN\WHY_IS_VS2008_SO_BROKEN\bin\Debug\WHY_IS_VS2008_SO_BROKEN.exe
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\WHY_IS_VS2008_SO_BROKEN\WHY_IS_VS2008_SO_BROKEN\bin\Debug\WHY_IS_VS2008_SO_BROKEN.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\WHY_IS_VS2008_SO_BROKEN\WHY_IS_VS2008_SO_BROKEN\obj\Debug\WHY_IS_VS2008_SO_BROKEN.exe
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\WHY_IS_VS2008_SO_BROKEN\WHY_IS_VS2008_SO_BROKEN\obj\Debug\WHY_IS_VS2008_SO_BROKEN.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\WHY_IS_VS2008_SO_BROKEN\WHY_IS_VS2008_SO_BROKEN\obj\Debug\WHY_IS_VS2008_SO_BROKEN.AreaScanner.resources

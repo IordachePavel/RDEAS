@@ -1,0 +1,14 @@
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\cannotbelieveitbrokeagain\cannotbelieveitbrokeagain\bin\Debug\cannotbelieveitbrokeagain.exe
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\cannotbelieveitbrokeagain\cannotbelieveitbrokeagain\bin\Debug\cannotbelieveitbrokeagain.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\cannotbelieveitbrokeagain\cannotbelieveitbrokeagain\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\cannotbelieveitbrokeagain\cannotbelieveitbrokeagain\obj\Debug\cannotbelieveitbrokeagain.AreaScanner.resources
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\cannotbelieveitbrokeagain\cannotbelieveitbrokeagain\obj\Debug\cannotbelieveitbrokeagain.Form1.resources
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\cannotbelieveitbrokeagain\cannotbelieveitbrokeagain\obj\Debug\cannotbelieveitbrokeagain.Help_Page.resources
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\cannotbelieveitbrokeagain\cannotbelieveitbrokeagain\obj\Debug\cannotbelieveitbrokeagain.Properties.Resources.resources
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\cannotbelieveitbrokeagain\cannotbelieveitbrokeagain\obj\Debug\cannotbelieveitbrokeagain.Sensor_Graphs.resources
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\cannotbelieveitbrokeagain\cannotbelieveitbrokeagain\obj\Debug\cannotbelieveitbrokeagain.TTL_Demo.resources
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\cannotbelieveitbrokeagain\cannotbelieveitbrokeagain\obj\Debug\cannotbelieveitbrokeagain.csproj.GenerateResource.Cache
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\cannotbelieveitbrokeagain\cannotbelieveitbrokeagain\obj\Debug\cannotbelieveitbrokeagain.exe
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\cannotbelieveitbrokeagain\cannotbelieveitbrokeagain\obj\Debug\cannotbelieveitbrokeagain.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\cannotbelieveitbrokeagain\cannotbelieveitbrokeagain\obj\Debug\cannotbelieveitbrokeagain.FullScan3D.resources
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\cannotbelieveitbrokeagain\cannotbelieveitbrokeagain\obj\Debug\cannotbelieveitbrokeagain.ScanSettings.resources
