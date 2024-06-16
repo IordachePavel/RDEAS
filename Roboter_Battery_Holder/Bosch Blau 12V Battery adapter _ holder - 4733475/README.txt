@@ -1,0 +1,1 @@
+Bosch Blau 12V Battery adapter / holder by Knrd on Thingiverse: https://www.thingiverse.com/thing:4733475
