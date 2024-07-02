@@ -315,10 +315,6 @@ void BaudUpdate(String DATA){
         if(BaudAccepted[i]==BaudRate){
           Serial.println("OK!");
           Serial.end();
-          lcd.clear();
-          lcd.setCursor(0,0);
-          lcd.println("Config OK.");
-          lcd.println("Starting Serial...");
           Serial.begin(BaudRate);
           Serial.setTimeout(10);
           delay(500);
@@ -330,6 +326,7 @@ void BaudUpdate(String DATA){
       lcd.clear();
       lcd.println("Out of range!");
       delay(500);
+      lcd.clear();
       return 0;
     }
 }
@@ -366,6 +363,7 @@ bool SerialSetup(){
           Serial.begin(BaudRate);
           Serial.setTimeout(10);
           delay(500);
+          lcd.clear();
           return 1;
         }
       }
