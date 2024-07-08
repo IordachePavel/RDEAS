@@ -48,12 +48,27 @@ const int RightButton = A1;
 bool GamingMode = false; 
 bool ShowMeasurementMode = false;
 bool ToggledMsrmtMd = false;
+///Wait for measurement
+bool WaitingForMeasurements=false;
 
 ///Baud Rate Config
 int BaudAccepted[23]={50, 75, 100, 110, 150, 300, 600, 900, 1200, 1800, 2400, 3600, 4800, 9600, 14400, 19200, 33600, 38400, 56000, 57600, 76800, 115200};
 
 ///Message Interpreter
 String MSG;
+
+
+/// Message logic table
+/// MCU - (Test functions) 1-4
+/// BDA - Baud rate change, to change baud rate use "BDA<BAUDRATE>" 
+/// ERR - Error
+/// MSR - Request Measurement
+/// RES - Requested measurement result, to be received as "RES<RESULT_VALUE_STRING>""
+/// Joystick positioning data, sent as "<RX=a RY=b LX=c LY=d>" where you have to extract the a,b,c and d values to get the position of the joystick 
+
+///If measurement received message is wrong, the MCU will send another request, set below time to wait before it sends another request
+int WaitToResendRequest = 2000;
+
 
 void initOxSens(){
   if (!pox.begin()) {
@@ -161,18 +176,18 @@ void GamingModeController(){
   int RX = analogRead(RightPotX);
   int RY = analogRead(RightPotY);
   int cntrlBtn = !digitalRead(LeftButton);
-  int Trig =!digitalRead(RightButton);
+  WaitingForMeasurements =!digitalRead(RightButton);
   Serial.print("RX=");
   Serial.print(RX);
-  Serial.print(", RY=");
+  Serial.print(" RY=");
   Serial.print(RY);
-  Serial.print(", LX=");
+  Serial.print(" LX=");
   Serial.print(LX);
-  Serial.print(", LY=");
-  Serial.print(LY);
-  Serial.print(", TRIG=");
-  Serial.println(Trig);
-
+  Serial.print(" LY=");
+  Serial.println(LY);
+  if(WaitingForMeasurements){
+    Serial.println("MSR");
+  }
     //Toggle joystick debug values
   if(cntrlBtn){
     ShowMeasurementMode=!ShowMeasurementMode;
@@ -421,12 +436,23 @@ void loop() {
   MessageInterpreter(MSG[4]);
   else if (cmpNstr(MSG,"BDA",3))
   BaudUpdate(MSG);
+  else if (cmpNstr(MSG,"RES",3)){
+    Serial.println(MSG);
+    WaitingForMeasurements=false;
+  }
   else{
+    if(!WaitingForMeasurements){
     if(EnableNewline){
     Serial.println(MSG);
     }
     else{
     Serial.print(MSG);  
+    }
+    }
+    else{
+      Serial.println("ERR");
+      delay(WaitToResendRequest);
+      Serial.println("MSR");
     }
   }
   }   
@@ -439,7 +465,7 @@ void loop() {
   }
 
 
-  if(val==4){
+  if(val==4&&!WaitingForMeasurements){
     GamingModeController();
   }
   else{
