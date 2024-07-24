@@ -13,6 +13,7 @@ Turela de scanare:
 ![IMG_6857](https://github.com/user-attachments/assets/fb876746-86c1-4fcc-8d84-4233f363d171)
 ![IMG_6860](https://github.com/user-attachments/assets/d713b0d3-b6f3-4ba8-b302-4fbeb5e25ca4)
 Alcătuită din două motoare , comutatoare de limită și banca de senzori, aceasta se poate roti cu 300° pe orizontală iar banca de senzori cu 270° balans vertical. 
+
 Sistem de deplasare:
 Compus din 4 motoare, controlate câte 2 deodată pentru mișcare și viraj tip tanc.
 
@@ -37,6 +38,10 @@ Circuitul de navigare al robotului: Acesta are rolul de control al sistemelor me
 
 Circuitul de interfață pentru senzori:
 Acesta are la bază chipul RP-2040, se ocupă prin interfațarea senzorului interschimbabil și a senzorilor de pe turelă. Acesta preia informațiile de la senzori și îi transmite prin USB la calculatorul de placă unică.
+Module de senzori:
+Numărător cu tub Geiger-Muller
+Senzor temperatură și umiditate ambientală + Senzor concentrație gaz explozibil
+![IMG_6853](https://github.com/user-attachments/assets/926b1fb1-637a-47a2-8c21-05c2f45d44ea)
 
 Calculatorul de placă unică „Raspberry Pi 5”:
 Acesta se ocupă cu procesarea datelor și interpretarea acestora pentru operații autonome, totodată controlând sistemele mecanice și recepționând/transmițând informații de la/la telecomandă prin portul serial, sau prin Ethernet de la/la un calculator.
