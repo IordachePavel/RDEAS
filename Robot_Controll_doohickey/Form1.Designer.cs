@@ -32,8 +32,6 @@ namespace Robot_Control_doohickey
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.SendMSG = new System.Windows.Forms.Button();
             this.SendMSGTest = new System.Windows.Forms.TabControl();
             this.SetupLogicControl = new System.Windows.Forms.TabPage();
@@ -49,6 +47,7 @@ namespace Robot_Control_doohickey
             this.label5 = new System.Windows.Forms.Label();
             this.MessageBox = new System.Windows.Forms.TextBox();
             this.ComSettings = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -57,13 +56,19 @@ namespace Robot_Control_doohickey
             this.BeginSerial = new System.Windows.Forms.Button();
             this.ReadoutDoohickey = new System.Windows.Forms.TabControl();
             this.Config = new System.Windows.Forms.TabPage();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.SNSR = new System.Windows.Forms.TextBox();
+            this.STMP = new System.Windows.Forms.TextBox();
+            this.TMP = new System.Windows.Forms.TextBox();
             this.UpdateConfigData = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.Graph = new System.Windows.Forms.TabPage();
-            this.GraphDataReader = new System.Windows.Forms.TextBox();
-            this.MeasurementList = new System.Windows.Forms.ComboBox();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.DST = new System.Windows.Forms.TextBox();
             this.DataEx = new System.Windows.Forms.TabPage();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.SerialMSGBox = new System.Windows.Forms.TextBox();
             this.NetworkMSGBox = new System.Windows.Forms.TextBox();
             this.Cntrl = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -83,17 +88,14 @@ namespace Robot_Control_doohickey
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.TransmitterTimer = new System.Windows.Forms.Timer(this.components);
-            this.SerialMSGBox = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.SensorType = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.SendMSGTest.SuspendLayout();
             this.SetupLogicControl.SuspendLayout();
             this.Demo_Transmit.SuspendLayout();
             this.ComSettings.SuspendLayout();
             this.ReadoutDoohickey.SuspendLayout();
             this.Config.SuspendLayout();
-            this.Graph.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.DataEx.SuspendLayout();
             this.Cntrl.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -245,6 +247,7 @@ namespace Robot_Control_doohickey
             // 
             // ComSettings
             // 
+            this.ComSettings.Controls.Add(this.button1);
             this.ComSettings.Controls.Add(this.label7);
             this.ComSettings.Controls.Add(this.label6);
             this.ComSettings.Controls.Add(this.label4);
@@ -257,6 +260,16 @@ namespace Robot_Control_doohickey
             this.ComSettings.TabIndex = 2;
             this.ComSettings.Text = "JoystickControl";
             this.ComSettings.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(125, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Refresh";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label7
             // 
@@ -314,7 +327,6 @@ namespace Robot_Control_doohickey
             // 
             this.ReadoutDoohickey.Alignment = System.Windows.Forms.TabAlignment.Left;
             this.ReadoutDoohickey.Controls.Add(this.Config);
-            this.ReadoutDoohickey.Controls.Add(this.Graph);
             this.ReadoutDoohickey.Controls.Add(this.DataEx);
             this.ReadoutDoohickey.Controls.Add(this.Cntrl);
             this.ReadoutDoohickey.Location = new System.Drawing.Point(22, 12);
@@ -326,80 +338,110 @@ namespace Robot_Control_doohickey
             // 
             // Config
             // 
+            this.Config.Controls.Add(this.button2);
+            this.Config.Controls.Add(this.SensorType);
+            this.Config.Controls.Add(this.label13);
+            this.Config.Controls.Add(this.label12);
+            this.Config.Controls.Add(this.label11);
+            this.Config.Controls.Add(this.label10);
+            this.Config.Controls.Add(this.SNSR);
+            this.Config.Controls.Add(this.STMP);
+            this.Config.Controls.Add(this.TMP);
             this.Config.Controls.Add(this.UpdateConfigData);
-            this.Config.Controls.Add(this.textBox2);
-            this.Config.Location = new System.Drawing.Point(42, 4);
+            this.Config.Controls.Add(this.DST);
+            this.Config.Location = new System.Drawing.Point(23, 4);
             this.Config.Name = "Config";
             this.Config.Padding = new System.Windows.Forms.Padding(3);
-            this.Config.Size = new System.Drawing.Size(594, 254);
+            this.Config.Size = new System.Drawing.Size(613, 254);
             this.Config.TabIndex = 0;
             this.Config.Text = "Sys. config";
             this.Config.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(16, 163);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(177, 18);
+            this.label13.TabIndex = 8;
+            this.label13.Text = "Installed sensor readouts:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(18, 119);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(169, 18);
+            this.label12.TabIndex = 7;
+            this.label12.Text = "Thermopile temperature:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(18, 75);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(190, 18);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "Target surface temperature:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(18, 33);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(155, 18);
+            this.label10.TabIndex = 5;
+            this.label10.Text = "Distance from sensor:";
+            // 
+            // SNSR
+            // 
+            this.SNSR.Location = new System.Drawing.Point(355, 152);
+            this.SNSR.Multiline = true;
+            this.SNSR.Name = "SNSR";
+            this.SNSR.ReadOnly = true;
+            this.SNSR.Size = new System.Drawing.Size(233, 61);
+            this.SNSR.TabIndex = 4;
+            // 
+            // STMP
+            // 
+            this.STMP.Location = new System.Drawing.Point(355, 108);
+            this.STMP.Multiline = true;
+            this.STMP.Name = "STMP";
+            this.STMP.ReadOnly = true;
+            this.STMP.Size = new System.Drawing.Size(233, 38);
+            this.STMP.TabIndex = 3;
+            // 
+            // TMP
+            // 
+            this.TMP.Location = new System.Drawing.Point(355, 64);
+            this.TMP.Multiline = true;
+            this.TMP.Name = "TMP";
+            this.TMP.ReadOnly = true;
+            this.TMP.Size = new System.Drawing.Size(233, 38);
+            this.TMP.TabIndex = 2;
             // 
             // UpdateConfigData
             // 
             this.UpdateConfigData.Location = new System.Drawing.Point(3, 219);
             this.UpdateConfigData.Name = "UpdateConfigData";
-            this.UpdateConfigData.Size = new System.Drawing.Size(585, 23);
+            this.UpdateConfigData.Size = new System.Drawing.Size(197, 23);
             this.UpdateConfigData.TabIndex = 1;
             this.UpdateConfigData.Text = "Update device configuration data";
             this.UpdateConfigData.UseVisualStyleBackColor = true;
+            this.UpdateConfigData.Click += new System.EventHandler(this.UpdateConfigData_Click);
             // 
-            // textBox2
+            // DST
             // 
-            this.textBox2.Location = new System.Drawing.Point(6, 6);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(582, 207);
-            this.textBox2.TabIndex = 0;
-            // 
-            // Graph
-            // 
-            this.Graph.Controls.Add(this.GraphDataReader);
-            this.Graph.Controls.Add(this.MeasurementList);
-            this.Graph.Controls.Add(this.chart1);
-            this.Graph.Location = new System.Drawing.Point(42, 4);
-            this.Graph.Name = "Graph";
-            this.Graph.Padding = new System.Windows.Forms.Padding(3);
-            this.Graph.Size = new System.Drawing.Size(594, 254);
-            this.Graph.TabIndex = 1;
-            this.Graph.Text = "Graphing";
-            this.Graph.UseVisualStyleBackColor = true;
-            // 
-            // GraphDataReader
-            // 
-            this.GraphDataReader.Location = new System.Drawing.Point(145, 119);
-            this.GraphDataReader.Multiline = true;
-            this.GraphDataReader.Name = "GraphDataReader";
-            this.GraphDataReader.ReadOnly = true;
-            this.GraphDataReader.Size = new System.Drawing.Size(443, 129);
-            this.GraphDataReader.TabIndex = 2;
-            // 
-            // MeasurementList
-            // 
-            this.MeasurementList.FormattingEnabled = true;
-            this.MeasurementList.Location = new System.Drawing.Point(6, 119);
-            this.MeasurementList.Name = "MeasurementList";
-            this.MeasurementList.Size = new System.Drawing.Size(121, 21);
-            this.MeasurementList.TabIndex = 1;
-            // 
-            // chart1
-            // 
-            chartArea3.BackSecondaryColor = System.Drawing.Color.Black;
-            chartArea3.BorderColor = System.Drawing.Color.White;
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            this.chart1.Location = new System.Drawing.Point(6, 3);
-            this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Name = "Series1";
-            this.chart1.Series.Add(series3);
-            this.chart1.Size = new System.Drawing.Size(582, 110);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "chart1";
+            this.DST.Location = new System.Drawing.Point(355, 20);
+            this.DST.Multiline = true;
+            this.DST.Name = "DST";
+            this.DST.ReadOnly = true;
+            this.DST.Size = new System.Drawing.Size(233, 38);
+            this.DST.TabIndex = 0;
             // 
             // DataEx
             // 
@@ -407,12 +449,41 @@ namespace Robot_Control_doohickey
             this.DataEx.Controls.Add(this.label8);
             this.DataEx.Controls.Add(this.SerialMSGBox);
             this.DataEx.Controls.Add(this.NetworkMSGBox);
-            this.DataEx.Location = new System.Drawing.Point(42, 4);
+            this.DataEx.Location = new System.Drawing.Point(23, 4);
             this.DataEx.Name = "DataEx";
-            this.DataEx.Size = new System.Drawing.Size(594, 254);
+            this.DataEx.Size = new System.Drawing.Size(613, 254);
             this.DataEx.TabIndex = 2;
             this.DataEx.Text = "Raw Data";
             this.DataEx.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(303, 48);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(222, 20);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "Received serial messages:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(-1, 48);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(242, 20);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "Received network messages:";
+            // 
+            // SerialMSGBox
+            // 
+            this.SerialMSGBox.Location = new System.Drawing.Point(307, 71);
+            this.SerialMSGBox.Multiline = true;
+            this.SerialMSGBox.Name = "SerialMSGBox";
+            this.SerialMSGBox.ReadOnly = true;
+            this.SerialMSGBox.Size = new System.Drawing.Size(284, 180);
+            this.SerialMSGBox.TabIndex = 4;
             // 
             // NetworkMSGBox
             // 
@@ -431,9 +502,9 @@ namespace Robot_Control_doohickey
             this.Cntrl.Controls.Add(this.groupBox2);
             this.Cntrl.Controls.Add(this.groupBox1);
             this.Cntrl.Controls.Add(this.pictureBox4);
-            this.Cntrl.Location = new System.Drawing.Point(42, 4);
+            this.Cntrl.Location = new System.Drawing.Point(23, 4);
             this.Cntrl.Name = "Cntrl";
-            this.Cntrl.Size = new System.Drawing.Size(594, 254);
+            this.Cntrl.Size = new System.Drawing.Size(613, 254);
             this.Cntrl.TabIndex = 3;
             this.Cntrl.Text = "Manual control";
             // 
@@ -577,7 +648,6 @@ namespace Robot_Control_doohickey
             // 
             // pictureBox2
             // 
-            this.pictureBox2.BackgroundImage = global::Robot_Control_doohickey.Properties.Resources.skydiving_kok__World_s_funniest_image_;
             this.pictureBox2.Location = new System.Drawing.Point(-1, -2);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(684, 528);
@@ -589,34 +659,23 @@ namespace Robot_Control_doohickey
             this.TransmitterTimer.Enabled = true;
             this.TransmitterTimer.Interval = 150;
             // 
-            // SerialMSGBox
+            // SensorType
             // 
-            this.SerialMSGBox.Location = new System.Drawing.Point(307, 71);
-            this.SerialMSGBox.Multiline = true;
-            this.SerialMSGBox.Name = "SerialMSGBox";
-            this.SerialMSGBox.ReadOnly = true;
-            this.SerialMSGBox.Size = new System.Drawing.Size(284, 180);
-            this.SerialMSGBox.TabIndex = 4;
+            this.SensorType.AutoSize = true;
+            this.SensorType.Location = new System.Drawing.Point(16, 190);
+            this.SensorType.Name = "SensorType";
+            this.SensorType.Size = new System.Drawing.Size(0, 13);
+            this.SensorType.TabIndex = 9;
             // 
-            // label8
+            // button2
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(-1, 48);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(242, 20);
-            this.label8.TabIndex = 5;
-            this.label8.Text = "Received network messages:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(303, 48);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(222, 20);
-            this.label9.TabIndex = 6;
-            this.label9.Text = "Received serial messages:";
+            this.button2.Location = new System.Drawing.Point(369, 219);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(197, 23);
+            this.button2.TabIndex = 10;
+            this.button2.Text = "Request measurements";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Form1
             // 
@@ -640,9 +699,6 @@ namespace Robot_Control_doohickey
             this.ReadoutDoohickey.ResumeLayout(false);
             this.Config.ResumeLayout(false);
             this.Config.PerformLayout();
-            this.Graph.ResumeLayout(false);
-            this.Graph.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.DataEx.ResumeLayout(false);
             this.DataEx.PerformLayout();
             this.Cntrl.ResumeLayout(false);
@@ -685,15 +741,11 @@ namespace Robot_Control_doohickey
         private PictureBox pictureBox3;
         private TabControl ReadoutDoohickey;
         private TabPage Config;
-        private TabPage Graph;
         private TabPage DataEx;
         private TabPage Cntrl;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.IO.Ports.SerialPort serialPort1;
-        private ComboBox MeasurementList;
         private Button UpdateConfigData;
-        private TextBox textBox2;
-        private TextBox GraphDataReader;
+        private TextBox DST;
         private TextBox NetworkMSGBox;
         private PictureBox pictureBox4;
         private GroupBox groupBox1;
@@ -711,6 +763,16 @@ namespace Robot_Control_doohickey
         private Label label9;
         private Label label8;
         private TextBox SerialMSGBox;
+        private Button button1;
+        private Label label13;
+        private Label label12;
+        private Label label11;
+        private Label label10;
+        private TextBox SNSR;
+        private TextBox STMP;
+        private TextBox TMP;
+        private Label SensorType;
+        private Button button2;
     }
 }
 

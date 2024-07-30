@@ -63,11 +63,9 @@ namespace Robot_Control_doohickey
 
             TransmitterTimer.Tick += new EventHandler(TimerForwardMovementComandTransmitterDelayNonClogRequest);
 
-            // Initialize the global SerialPort instance
             PortThatIsSerial = new SerialPort();
             PortThatIsSerial.DataReceived += SerialReceived;
 
-            // Populate the ComboBox with available serial ports
             string[] SerialPorts = SerialPort.GetPortNames();
             foreach (string portName in SerialPorts)
             {
@@ -78,28 +76,15 @@ namespace Robot_Control_doohickey
 
         private void SerialReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            // Read the data from the serial port
             string received = PortThatIsSerial.ReadExisting();
-
-            // Accumulate the received data
             serialBuffer.Append(received);
 
-            // Assuming your messages end with a newline character, process complete messages
             while (serialBuffer.ToString().Contains("\n"))
             {
-                // Find the position of the first newline character
                 int newlineIndex = serialBuffer.ToString().IndexOf('\n');
-
-                // Extract the complete message (up to and including the newline character)
                 string completeMessage = serialBuffer.ToString().Substring(0, newlineIndex + 1);
-
-                // Remove the processed message from the buffer
                 serialBuffer.Remove(0, newlineIndex + 1);
-
-                // Invoke UI update
                 SerialMSGBox.Invoke(new Action(() => SerialMSGBox.AppendText(completeMessage)));
-
-                // Respond to the message if necessary
                 if (completeMessage.Trim() == "MSR")
                 {
                     SendMessage("SNSR");
@@ -235,12 +220,49 @@ namespace Robot_Control_doohickey
 
         private void OnMessageReceived(object sender, MessageReceivedEventArgs e)
         {
-            // Handle received message here
             string receivedMessage = e.Message;
 
             // Update UI components
             ReceiveBox.Invoke(new Action(() => ReceiveBox.AppendText(receivedMessage + "\n")));
             NetworkMSGBox.Invoke(new Action(() => NetworkMSGBox.AppendText(receivedMessage + "\n")));
+            if (string.IsNullOrEmpty(receivedMessage))
+            {
+                return;
+            }
+            int messageType = CheckMessage(receivedMessage);
+            if (messageType == 1)
+            {
+                // Handle STMP message
+                string[] parts = receivedMessage.Split(' ');
+                foreach (string part in parts)
+                {
+                    if (part.StartsWith("DST:"))
+                    {
+                        if (part.Substring(4).Contains("-"))
+                        {
+                           DST.Invoke(new Action(() => DST.Text = "Out of range!"));
+                        }
+                        else
+                        DST.Invoke(new Action(() => DST.Text = part.Substring(4)));
+                    }
+                    else if (part.StartsWith("STMP:"))
+                    {
+                        STMP.Invoke(new Action(() => STMP.Text = part.Substring(5)));
+                    }
+                    else if (part.StartsWith("TMP:"))
+                    {
+                        TMP.Invoke(new Action(() => TMP.Text = part.Substring(4)));
+                    }
+                }
+            }
+            else if (messageType == -1)
+            {
+                SensorType.Invoke(new Action(() => SensorType.Text = receivedMessage));
+            }
+            else
+            {
+                SNSR.Invoke(new Action(() => SNSR.Text = receivedMessage));
+            }
         }
 
         private void BeginReceive()
@@ -381,5 +403,40 @@ namespace Robot_Control_doohickey
             }
         }
 
+        private int CheckMessage(string message)
+        {
+            if (message.Contains("STMP"))
+            {
+                return 1;
+            }
+            else if (message.Contains("Sensors installed:"))
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string[] SerialPorts = SerialPort.GetPortNames();
+            foreach (string portName in SerialPorts)
+            {
+                PortList.Items.Add(portName);
+            }
+        }
+
+        private void UpdateConfigData_Click(object sender, EventArgs e)
+        {
+            SendMessage("SNSL");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SendMessage("SNSR");
+            SendMessage("SNST");
+        }
     }
 }
