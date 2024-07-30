@@ -1,3 +1,6 @@
+# https://www.instructables.com/How-to-Stream-Video-From-Raspberry-Pi-to-Local-USB/
+# This is where the program is sourced from. 
+
 from flask import Flask, Response
 from picamera2 import Picamera2
 import cv2
