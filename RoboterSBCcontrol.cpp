@@ -29,7 +29,7 @@ bool AlreadyStoppedRotation = true;
 
 sp_port *port1;
 sp_port *port2;
-sp_port *raspberryPiUartPort; 
+sp_port *raspberryPiUartPort; // New serial port for Raspberry Pi UART
 
 // Function prototypes
 void configure_port(sp_port *port);
@@ -55,28 +55,29 @@ void configure_port(sp_port *port) {
 }
 
 void initialize_serial_ports() {
-    if (sp_get_port_by_name("/dev/ttyACM1", &port1) != SP_OK) {
+    if (sp_get_port_by_name("/dev/ttyACM1", &port2) != SP_OK) {
         std::cerr << "Failed to get port /dev/ttyACM1" << std::endl;
         exit(1);
     }
-    if (sp_open(port1, SP_MODE_READ_WRITE) != SP_OK) {
-        std::cerr << "Failed to open port /dev/ttyACM1" << std::endl;
-        exit(1);
-    }
-    configure_port(port1);
-
-    if (sp_get_port_by_name("/dev/ttyACM0", &port2) != SP_OK) {
-        std::cerr << "Failed to get port /dev/ttyACM0" << std::endl;
-        sp_close(port1);
-        exit(1);
-    }
     if (sp_open(port2, SP_MODE_READ_WRITE) != SP_OK) {
-        std::cerr << "Failed to open port /dev/ttyACM0" << std::endl;
-        sp_close(port1);
+        std::cerr << "Failed to open port /dev/ttyACM1" << std::endl;
         exit(1);
     }
     configure_port(port2);
 
+    if (sp_get_port_by_name("/dev/ttyACM0", &port1) != SP_OK) {
+        std::cerr << "Failed to get port /dev/ttyACM0" << std::endl;
+        sp_close(port1);
+        exit(1);
+    }
+    if (sp_open(port1, SP_MODE_READ_WRITE) != SP_OK) {
+        std::cerr << "Failed to open port /dev/ttyACM0" << std::endl;
+        sp_close(port1);
+        exit(1);
+    }
+    configure_port(port1);
+
+    // Open Raspberry Pi UART port
     if (sp_get_port_by_name("/dev/ttyAMA0", &raspberryPiUartPort) != SP_OK) {
         std::cerr << "Failed to get port /dev/ttyAMA0" << std::endl;
         sp_close(port1);
@@ -111,7 +112,7 @@ void SendUSBUART2(const std::string &message) {
 
 std::string ReceiveUSBUART(sp_port *port) {
     char buffer[1024];
-    int bytes_read = sp_blocking_read(port, buffer, sizeof(buffer) - 1, 1000);
+    int bytes_read = sp_blocking_read(port, buffer, sizeof(buffer) - 1, 1000); // Timeout of 1000 ms
     if (bytes_read > 0) {
         buffer[bytes_read] = '\0';
         return std::string(buffer);
@@ -123,6 +124,97 @@ void handleRotCommand(char movCommand) {
     StepperCommandEnable = true;
     PinMotorCommand = movCommand;
     std::cout << "Handling ROT command: " << movCommand << std::endl;
+}
+
+bool HomeYawMotor(){
+    std::cout << "Homing yaw" << std::endl;
+  bool yawA = false;
+  bool yawB = false;
+  bool SwitchAState = !digitalRead(Sw_Rot_Lim_1);
+  bool SwitchBState = !digitalRead(Sw_Rot_Lim_2);
+  if(SwitchAState && SwitchBState){
+    return true;
+  }
+  digitalWrite(Rot_Dir, 1);
+  for (int i=0;i<380 && !(yawA && yawB);i++){
+    digitalWrite(Rot_Stp,HIGH);
+    delay(5);
+    digitalWrite(Rot_Stp,LOW);
+    delay(5);
+    if(SwitchAState != !digitalRead(Sw_Rot_Lim_1)){
+      yawA = true;
+    }
+    if(SwitchBState != !digitalRead(Sw_Rot_Lim_2)){
+      yawB = true;
+    }
+  }
+  digitalWrite(Rot_Dir, 0);
+  for (int i=0;i<380*2 && !(yawA && yawB);i++){
+    digitalWrite(Rot_Stp,HIGH);
+    delay(5);
+    digitalWrite(Rot_Stp,LOW);
+    delay(5);
+    if(SwitchAState != !digitalRead(Sw_Rot_Lim_1)){
+      yawA = true;
+    }
+    if(SwitchBState != !digitalRead(Sw_Rot_Lim_2)){
+      yawB = true;
+    }
+  }
+  if(yawA&&yawB){ // Go just three more steps due to how the magnetic field is aligned to the sensor, it triggers earlier
+    for(int i=0;i<3;i++){
+    digitalWrite(Rot_Stp,HIGH);
+    delay(5);
+    digitalWrite(Rot_Stp,LOW);
+    delay(5);
+    }
+  }
+    return(yawA&&yawB);
+}
+
+bool HomePitchMotor(){
+  bool pitchA = false;
+  bool pitchB = false;
+  bool SwitchAState = !digitalRead(Sw_Pit_Lim_1);
+  bool SwitchBState = !digitalRead(Sw_Pit_Lim_2);
+  if(SwitchAState && SwitchBState){
+    return true;
+  }
+  digitalWrite(Pit_Stp, 1);
+  for (int i=0;i<246 && !(pitchA && pitchB);i++){
+    digitalWrite(Pit_Stp,HIGH);
+    delay(2);
+    digitalWrite(Pit_Stp,LOW);
+    delay(2);
+    if(SwitchAState != !digitalRead(Sw_Pit_Lim_1)){
+      pitchA = true;
+    }
+    if(SwitchBState != !digitalRead(Sw_Pit_Lim_2)){
+      pitchB = true;
+    }
+  }
+  digitalWrite(Pit_Dir , 0);
+  for (int i=0;i<256*2 && !(pitchA && pitchB);i++){
+    digitalWrite(Pit_Stp,HIGH);
+    delay(2);
+    digitalWrite(Pit_Stp,LOW);
+    delay(2);
+    if(SwitchAState != !digitalRead(Sw_Pit_Lim_1)){
+      pitchA = true;
+    }
+    if(SwitchBState != !digitalRead(Sw_Pit_Lim_2)){
+      pitchB = true;
+    }
+  }
+  if(pitchA&&pitchB){ // Go just three more steps due to how the magnetic field is aligned to the sensor, it triggers
+    for(int i=0;i<3;i++){
+    digitalWrite(Pit_Stp,HIGH);
+    delay(2);
+    digitalWrite(Pit_Stp,LOW);
+    delay(2);
+    }
+  }
+    return(pitchA&&pitchB);
 }
 
 void StepperMovementHandler(char movCommand) {
@@ -148,6 +240,8 @@ void StepperMovementHandler(char movCommand) {
         digitalWrite(Pit_Stp, LOW);
     }
 }
+
+
 
 void handleMovCommand(char movCommand) {
     std::cout << "Handling MOV command: " << movCommand << std::endl;
@@ -220,13 +314,17 @@ void ExtractNumbers(const std::string& MSG, int& RX, int& RY, int& LX, int& LY) 
 }
 
 int AmIGaming(const std::string& MSG) {
+    // Check for the presence of each substring
     bool containsRX = MSG.find("RX") != std::string::npos;
     bool containsRY = MSG.find("RY") != std::string::npos;
     bool containsLX = MSG.find("LX") != std::string::npos;
     bool containsLY = MSG.find("LY") != std::string::npos;
+
+    // Return 1 if all substrings are found, otherwise return 0
     return containsRX && containsRY && containsLX && containsLY ? 1 : 0;
 }
 
+// Function to interpret messages and toggle pins
 void interpretMessage(const std::string& message) {
     size_t pos = 0;
     size_t messageLength = message.length();
@@ -264,11 +362,11 @@ void handleRaspberryPiUartCommunication() {
             ExtractNumbers(serialMessage, RX, RY, LX, LY);
             if(!(LX < 530 && LX > 500 && LY < 530 && LY>490)){
                 AlreadyStoppedRotation=false;
-                if (LY > 550) interpretMessage("ROTA");
-                if (LY < 500) interpretMessage("ROTB");
+                if (LY > 550) interpretMessage("ROTC");
+                if (LY < 500) interpretMessage("ROTD");
                 else interpretMessage("MOVS");
-                if (LX < 500) interpretMessage("ROTC");
-                else if (LX > 530) interpretMessage("ROTD");
+                if (LX < 500) interpretMessage("ROTA");
+                else if (LX > 530) interpretMessage("ROTB");
             }
             else{
                 if(!AlreadyStoppedRotation){
@@ -305,12 +403,12 @@ void handleSerialCommunication(int client_socket) {
 
         if (!serialMessage1.empty()) {
             std::cout << "Received from Microcontroller 1: " << serialMessage1 << std::endl;
-            forwardMessageToClient(serialMessage1 + '\n', client_socket);
+            forwardMessageToClient(serialMessage1 + '\n', client_socket); // Forward to client
         }
 
         if (!serialMessage2.empty()) {
             std::cout << "Received from Microcontroller 2: " << serialMessage2 << std::endl;
-            forwardMessageToClient(serialMessage2+ '\n', client_socket);
+            forwardMessageToClient(serialMessage2+ '\n', client_socket); // Forward to client
         }
     }
 }
@@ -318,7 +416,7 @@ void handleSerialCommunication(int client_socket) {
 void handleNetworkCommunication(int client_socket) {
     char buffer[1024] = {0};
     while (true) {
-        ssize_t bytes_read = read(client_socket, buffer, sizeof(buffer) - 1); 
+        ssize_t bytes_read = read(client_socket, buffer, sizeof(buffer) - 1); // Read data from socket
         if (bytes_read <= 0) {
             if (bytes_read == 0) {
                 std::cout << "Client disconnected" << std::endl;
@@ -328,7 +426,7 @@ void handleNetworkCommunication(int client_socket) {
             close(client_socket);
             break;
         }
-        buffer[bytes_read] = '\0';
+        buffer[bytes_read] = '\0'; // Null-terminate the string
         std::string MSG(buffer);
 
         if (AmIGaming(MSG)) {
@@ -338,11 +436,11 @@ void handleNetworkCommunication(int client_socket) {
 
             if(!(LX < 530 && LX > 500 && LY < 530 && LY>490)){
                 AlreadyStoppedRotation=false;
-                if (LY > 550) interpretMessage("ROTA");
-                if (LY < 500) interpretMessage("ROTB");
+                if (LY > 550) interpretMessage("ROTC");
+                if (LY < 500) interpretMessage("ROTD");
                 else interpretMessage("MOVS");
-                if (LX < 500) interpretMessage("ROTC");
-                else if (LX > 530) interpretMessage("ROTD");
+                if (LX < 500) interpretMessage("ROTA");
+                else if (LX > 530) interpretMessage("ROTB");
                 if (!response.empty()) {
                     std::strncpy(buffer, response.c_str(), sizeof(buffer) - 1);
                     buffer[sizeof(buffer) - 1] = '\0';
@@ -380,7 +478,7 @@ void handleNetworkCommunication(int client_socket) {
         interpretMessage(MSG);
         if (StepperCommandEnable) {
             StepperMovementHandler(PinMotorCommand);
-            StepperCommandEnable = false; 
+            StepperCommandEnable = false; // Reset the flag after handling the command
         }
     }
 }
@@ -399,12 +497,13 @@ int main() {
     pinMode(Rot_Dir, OUTPUT);
     pinMode(Pit_Stp, OUTPUT);
     pinMode(Pit_Dir, OUTPUT);
-    pinMode(Sw_Pit_Lim_1, INPUT);
-    pinMode(Sw_Pit_Lim_2, INPUT);
+    pinMode(Sw_Pit_Lim_1, PUD_UP);
+    pinMode(Sw_Pit_Lim_2, PUD_UP);
     pinMode(Sw_Rot_Lim_1, INPUT);
     pinMode(Sw_Rot_Lim_2, INPUT);
     // Initialize pin block end
-
+     // HomePitchMotor();
+     HomeYawMotor();
     int server_fd, new_socket;
     struct sockaddr_in address;
     int opt = 1;
@@ -450,13 +549,16 @@ int main() {
             exit(EXIT_FAILURE);
         }
 
+        // Create threads for handling serial and network communication
         std::thread serialThread(handleSerialCommunication, new_socket);
         std::thread networkThread(handleNetworkCommunication, new_socket);
 
+        // Detach threads if you do not need to join them later
         serialThread.detach();
         networkThread.detach();
     }
 
+    // Close serial ports and clean up
     close_serial_ports();
 
     return 0;
